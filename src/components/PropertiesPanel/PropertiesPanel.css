@@ -1,0 +1,221 @@
+/* ============================================
+   Properties Panel — FlowCraft
+   ============================================ */
+
+.properties-panel {
+  width: var(--properties-width);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-left: 1px solid var(--color-border);
+  background: var(--color-bg-secondary);
+  animation: slideInRight 0.4s ease-out;
+  z-index: 10;
+  flex-shrink: 0;
+  overflow-y: auto;
+}
+
+.properties-header {
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+  font-size: var(--font-size-md);
+  font-weight: 600;
+  color: var(--color-text-primary);
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.properties-header svg {
+  width: 16px;
+  height: 16px;
+  color: var(--color-accent);
+}
+
+/* ── Empty state ── */
+.properties-empty {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-3);
+  padding: var(--space-8);
+  text-align: center;
+}
+.properties-empty-icon {
+  width: 48px;
+  height: 48px;
+  color: var(--color-text-muted);
+  opacity: 0.4;
+}
+.properties-empty-text {
+  font-size: var(--font-size-sm);
+  color: var(--color-text-muted);
+  line-height: 1.6;
+}
+
+/* ── Property group ── */
+.prop-group {
+  padding: var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+.prop-group-title {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-3);
+}
+
+.prop-row {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  margin-bottom: var(--space-3);
+}
+.prop-row:last-child {
+  margin-bottom: 0;
+}
+.prop-label {
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+}
+
+/* ── Color picker row ── */
+.color-picker-row {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.color-picker-swatch {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-sm);
+  border: 2px solid var(--color-border);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  flex-shrink: 0;
+  transition: border-color var(--transition-fast);
+}
+.color-picker-swatch:hover {
+  border-color: var(--color-border-hover);
+}
+.color-picker-swatch input[type="color"] {
+  position: absolute;
+  inset: -8px;
+  width: calc(100% + 16px);
+  height: calc(100% + 16px);
+  cursor: pointer;
+  border: none;
+  padding: 0;
+}
+
+/* ── Delete button ── */
+.prop-delete-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: var(--space-2);
+  width: 100%;
+  padding: var(--space-2) var(--space-3);
+  margin-top: var(--space-2);
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  font-weight: 500;
+  color: var(--color-danger);
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.prop-delete-btn:hover {
+  background: rgba(239, 68, 68, 0.15);
+  border-color: rgba(239, 68, 68, 0.4);
+}
+.prop-delete-btn svg {
+  width: 14px;
+  height: 14px;
+}
+
+/* ── Rotation control ── */
+.rotation-control {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+}
+.rotation-slider {
+  flex: 1;
+  height: 4px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: var(--color-bg-elevated);
+  border-radius: var(--radius-full);
+  outline: none;
+  cursor: pointer;
+}
+.rotation-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  cursor: grab;
+  border: 2px solid var(--color-bg-primary);
+  box-shadow: 0 0 6px var(--color-accent-glow);
+  transition: transform var(--transition-fast);
+}
+.rotation-slider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+.rotation-slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: var(--color-accent);
+  cursor: grab;
+  border: 2px solid var(--color-bg-primary);
+}
+.rotation-input {
+  width: 60px !important;
+  text-align: center;
+  flex-shrink: 0;
+}
+.rotation-presets {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-1);
+  margin-top: var(--space-2);
+}
+.rotation-preset-btn {
+  padding: 2px 8px;
+  font-family: var(--font-family);
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.rotation-preset-btn:hover {
+  background: var(--color-bg-elevated);
+  border-color: var(--color-border-hover);
+  color: var(--color-text-primary);
+}
+.rotation-preset-btn.active {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: white;
+}
+
+/* ── Spin animation (for export loading) ── */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}

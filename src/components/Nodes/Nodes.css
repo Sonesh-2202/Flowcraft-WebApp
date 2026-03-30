@@ -1,0 +1,167 @@
+/* ============================================
+   Custom Node Styles — FlowCraft
+   ============================================ */
+
+.fc-node {
+  position: relative;
+  min-width: 120px;
+  min-height: 50px;
+  transition: filter var(--transition-fast),
+              transform var(--transition-spring);
+}
+.fc-node:hover {
+  filter: brightness(1.08);
+}
+.fc-node.selected {
+  filter: brightness(1.12);
+}
+
+/* ── Shared text label ── */
+.fc-node-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 8px 12px;
+  font-family: var(--font-family);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  pointer-events: none;
+  word-break: break-word;
+  line-height: 1.3;
+  z-index: 2;
+}
+
+/* ── Editable input overlay ── */
+.fc-node-input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  text-align: center;
+  font-family: var(--font-family);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--color-text-primary);
+  padding: 8px 12px;
+  z-index: 3;
+  cursor: text;
+  resize: none;
+  overflow: hidden;
+}
+
+/* ── Handle styling ── */
+.fc-node .react-flow__handle {
+  width: 10px;
+  height: 10px;
+  background: var(--color-accent);
+  border: 2px solid var(--color-bg-primary);
+  border-radius: 50%;
+  opacity: 0;
+  transition: opacity var(--transition-fast),
+              transform var(--transition-spring);
+}
+.fc-node:hover .react-flow__handle,
+.fc-node.selected .react-flow__handle {
+  opacity: 1;
+}
+.fc-node .react-flow__handle:hover {
+  transform: scale(1.4);
+  background: var(--color-secondary);
+  box-shadow: 0 0 8px var(--color-secondary-glow);
+}
+
+/* ── Selection ring ── */
+.fc-node.selected::after {
+  content: '';
+  position: absolute;
+  inset: -4px;
+  border-radius: inherit;
+  border: 2px solid var(--color-accent);
+  pointer-events: none;
+  animation: pulse 2s ease-in-out infinite;
+  z-index: 1;
+}
+
+/* ── Rectangle ── */
+.fc-node-rectangle {
+  border-radius: var(--radius-md);
+  width: 160px;
+  height: 60px;
+}
+.fc-node-rectangle svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ── Arrow & Line ── */
+.fc-node-arrow {
+  width: 140px;
+  height: 60px;
+}
+.fc-node-line {
+  width: 150px;
+  height: 60px;
+}
+
+/* ── Diamond ── */
+.fc-node-diamond {
+  width: 140px;
+  height: 100px;
+}
+.fc-node-diamond .fc-node-label,
+.fc-node-diamond .fc-node-input {
+  padding: 20px 24px;
+}
+
+/* ── Circle ── */
+.fc-node-circle {
+  width: 100px;
+  height: 100px;
+}
+
+/* ── Parallelogram ── */
+.fc-node-parallelogram {
+  width: 160px;
+  height: 70px;
+}
+.fc-node-parallelogram .fc-node-label,
+.fc-node-parallelogram .fc-node-input {
+  padding: 8px 28px;
+}
+
+/* ── Cloud ── */
+.fc-node-cloud {
+  width: 160px;
+  height: 100px;
+}
+.fc-node-cloud .fc-node-label,
+.fc-node-cloud .fc-node-input {
+  padding: 20px 24px;
+}
+
+/* ── Database ── */
+.fc-node-database {
+  width: 120px;
+  height: 100px;
+}
+.fc-node-database .fc-node-label,
+.fc-node-database .fc-node-input {
+  padding: 24px 12px 8px 12px;
+}
+
+/* ── Drop animation ── */
+@keyframes nodeDropIn {
+  0%   { transform: scale(0.6); opacity: 0; }
+  60%  { transform: scale(1.05); opacity: 1; }
+  100% { transform: scale(1); opacity: 1; }
+}
+.fc-node-enter {
+  animation: nodeDropIn 0.35s var(--transition-spring) forwards;
+}

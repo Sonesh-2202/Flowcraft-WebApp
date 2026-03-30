@@ -1,0 +1,145 @@
+/* ============================================
+   Sidebar — FlowCraft
+   ============================================ */
+
+.sidebar {
+  width: var(--sidebar-width);
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  border-right: 1px solid var(--color-border);
+  background: var(--color-bg-secondary);
+  animation: slideInLeft 0.4s ease-out;
+  z-index: 10;
+  flex-shrink: 0;
+  overflow-y: auto;
+}
+
+/* ── Logo ── */
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-4) var(--space-4);
+  border-bottom: 1px solid var(--color-border);
+}
+.sidebar-logo-icon {
+  width: 32px;
+  height: 32px;
+  border-radius: var(--radius-md);
+  background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 16px var(--color-accent-glow);
+  flex-shrink: 0;
+}
+.sidebar-logo-icon svg {
+  width: 18px;
+  height: 18px;
+  color: white;
+}
+.sidebar-logo-text {
+  font-size: var(--font-size-lg);
+  font-weight: 700;
+  background: linear-gradient(135deg, #93c5fd, #c4b5fd);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.02em;
+}
+
+/* ── Section ── */
+.sidebar-section {
+  padding: var(--space-4);
+}
+.sidebar-section-title {
+  font-size: var(--font-size-xs);
+  font-weight: 600;
+  color: var(--color-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: var(--space-3);
+}
+
+/* ── Node palette grid ── */
+.node-palette {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: var(--space-2);
+}
+
+/* ── Draggable node card ── */
+.node-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--space-2);
+  padding: var(--space-3) var(--space-2);
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-md);
+  cursor: grab;
+  transition: all var(--transition-fast);
+  user-select: none;
+}
+.node-card:hover {
+  background: var(--color-bg-elevated);
+  border-color: var(--color-border-hover);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+.node-card:active {
+  cursor: grabbing;
+  transform: translateY(0) scale(0.97);
+}
+.node-card-icon {
+  width: 40px;
+  height: 28px;
+  color: var(--color-text-secondary);
+  transition: color var(--transition-fast);
+}
+.node-card:hover .node-card-icon {
+  color: var(--color-accent);
+}
+.node-card-label {
+  font-size: var(--font-size-xs);
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  white-space: nowrap;
+}
+
+/* ── Edge type section ── */
+.edge-type-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+}
+.edge-type-item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-2) var(--space-3);
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+}
+.edge-type-item:hover,
+.edge-type-item.active {
+  background: var(--color-bg-elevated);
+  border-color: var(--color-border-hover);
+  color: var(--color-text-primary);
+}
+.edge-type-item.active {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+}
+.edge-type-line {
+  width: 28px;
+  height: 2px;
+  flex-shrink: 0;
+}

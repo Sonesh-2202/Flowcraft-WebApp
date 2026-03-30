@@ -1,0 +1,87 @@
+/* ============================================
+   Flow Canvas — FlowCraft
+   ============================================ */
+
+.canvas-wrapper {
+  flex: 1;
+  position: relative;
+  overflow: hidden;
+  background: var(--color-bg-primary);
+}
+
+/* ── ReactFlow overrides ── */
+.react-flow {
+  background: var(--color-bg-primary) !important;
+}
+
+/* Canvas dot grid */
+.react-flow__background {
+  opacity: 0.5;
+}
+
+/* Edge styling */
+.react-flow__edge-path {
+  stroke: var(--color-text-muted) !important;
+  stroke-width: 2 !important;
+}
+.react-flow__edge.selected .react-flow__edge-path,
+.react-flow__edge:hover .react-flow__edge-path {
+  stroke: var(--color-accent) !important;
+  stroke-width: 2.5 !important;
+  filter: drop-shadow(0 0 4px var(--color-accent-glow));
+}
+
+/* Connection line */
+.react-flow__connection-path {
+  stroke: var(--color-accent) !important;
+  stroke-width: 2 !important;
+  stroke-dasharray: 6 3;
+  animation: connectionDash 0.5s linear infinite;
+}
+@keyframes connectionDash {
+  to { stroke-dashoffset: -9; }
+}
+
+/* Edge marker (arrowhead) */
+.react-flow__arrowhead polyline {
+  stroke: var(--color-text-muted);
+  fill: var(--color-text-muted);
+}
+.react-flow__edge.selected .react-flow__arrowhead polyline,
+.react-flow__edge:hover .react-flow__arrowhead polyline {
+  stroke: var(--color-accent);
+  fill: var(--color-accent);
+}
+
+/* Selection box */
+.react-flow__selection {
+  background: rgba(59, 130, 246, 0.08) !important;
+  border: 1px dashed var(--color-accent) !important;
+}
+
+/* Minimap */
+.react-flow__minimap {
+  background: var(--color-bg-secondary) !important;
+  border: 1px solid var(--color-border) !important;
+  border-radius: var(--radius-md) !important;
+  box-shadow: var(--shadow-md) !important;
+  bottom: 16px !important;
+  right: 16px !important;
+}
+
+/* Attribution hide */
+.react-flow__attribution {
+  display: none !important;
+}
+
+/* ── Drop indicator ── */
+.canvas-wrapper.drag-over::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border: 2px dashed var(--color-accent);
+  border-radius: var(--radius-lg);
+  pointer-events: none;
+  z-index: 5;
+  animation: pulse 1.5s ease-in-out infinite;
+}
