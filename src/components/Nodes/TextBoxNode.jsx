@@ -55,6 +55,8 @@ export default function TextBoxNode({ id, data, selected }) {
           background: bgColor,
           borderColor,
           borderWidth,
+          borderStyle: 'dashed',
+          boxSizing: 'border-box',
           ...glowStyle,
         }}
       >
