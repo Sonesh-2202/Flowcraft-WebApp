@@ -13,11 +13,11 @@ src/
 │   ├── Sidebar/         # Draggable palette of available nodes
 │   └── Toolbar/         # Top action bar (Undo, Redo, Export, etc.)
 ├── hooks/               # Custom React hooks (e.g., useUndoRedo)
-├── store/               # Global state management using Zustand
-├── utils/               # Helper scripts functions (e.g., export logic)
+├── store/               # Global state management (useReducer + Context)
+├── utils/               # Helper functions (e.g., export logic)
 ├── App.css              # Main application specific styles
 ├── App.jsx              # Main application layout orchestrator
-├── index.css            # Global CSS styles including tailwind/utils
+├── index.css            # Global CSS styles and design system variables
 └── main.jsx             # React entry point, context providers
 ```
 
@@ -29,7 +29,7 @@ src/
 * **`App.css` & `index.css`**: Defines global layout behavior, fonts, utility classes, and custom css variables for the overall look and feel.
 
 ### 2. Global State (`src/store/`)
-* **`flowStore.jsx`**: This uses **React Context and useReducer** to manage the global state of the application.
+* **`flowStore.jsx`**: Uses **React Context and `useReducer`** to manage the global state of the application.
   * **What it does**: It stores the current `nodes` and `edges` on the canvas, handles Theme (Light/Dark mode) in tandem with App.jsx. It provides functions to add nodes, connect nodes, update properties (colors, text, labels, etc.), scale properties via ReactFlow Resizers, and clear the canvas.
   * **What to do with it**: Whenever you need to add a new global action (like a new keyboard shortcut that affects the whole canvas), define the state updater here.
 
