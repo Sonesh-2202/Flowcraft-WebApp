@@ -156,6 +156,24 @@
   padding: 24px 12px 8px 12px;
 }
 
+/* ── Text box / annotation ── */
+.fc-node-text-box {
+  width: 180px;
+  min-height: 44px;
+  border-style: dashed;
+  border-radius: 8px;
+}
+.fc-node-text-box .fc-node-text-box-label,
+.fc-node-text-box .fc-node-text-box-input {
+  justify-content: flex-start;
+  align-items: flex-start;
+  text-align: left;
+  padding: 8px 10px;
+}
+.fc-node-text-box .fc-node-text-box-input {
+  line-height: 1.4;
+}
+
 /* ── Drop animation ── */
 @keyframes nodeDropIn {
   0%   { transform: scale(0.6); opacity: 0; }

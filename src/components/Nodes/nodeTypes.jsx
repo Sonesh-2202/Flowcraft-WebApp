@@ -7,6 +7,7 @@ import DatabaseNode from './DatabaseNode';
 import ArrowNode from './ArrowNode';
 import ImageNode from './ImageNode';
 import LineNode from './LineNode';
+import TextBoxNode from './TextBoxNode';
 
 const nodeTypes = {
   rectangle: RectangleNode,
@@ -18,6 +19,7 @@ const nodeTypes = {
   arrow: ArrowNode,
   image: ImageNode,
   line: LineNode,
+  textBox: TextBoxNode,
 };
 
 export default nodeTypes;
@@ -136,6 +138,25 @@ export const nodeDefinitions = [
       fontSize: 13,
       fontFamily: 'Inter',
       rotation: 0,
+    },
+  },
+  {
+    type: 'textBox',
+    label: 'Text Box',
+    icon: (
+      <svg viewBox="0 0 40 28" fill="none">
+        <rect x="3" y="4" width="34" height="20" rx="4" stroke="currentColor" strokeWidth="1.5" />
+        <path d="M11 10h18M11 14h14M11 18h10" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+      </svg>
+    ),
+    defaultData: {
+      label: 'Add text',
+      bgColor: '#0b1220',
+      borderColor: '#60a5fa',
+      fontColor: '#93c5fd',
+      borderWidth: 1.5,
+      fontSize: 14,
+      fontFamily: 'Inter',
     },
   },
   {
