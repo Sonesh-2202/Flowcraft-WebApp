@@ -158,8 +158,6 @@
 
 /* ── Text box / annotation ── */
 .fc-node-text-box {
-  width: 180px;
-  min-height: 44px;
   border-style: dashed;
   border-radius: 8px;
 }
