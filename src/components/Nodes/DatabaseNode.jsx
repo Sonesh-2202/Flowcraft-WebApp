@@ -26,9 +26,17 @@ export default function DatabaseNode({ id, data, selected }) {
 
   const bgColor = data.bgColor || '#1e3a5f';
   const borderColor = data.borderColor || '#ec4899';
+  const fontColor = data.fontColor || '#ffffff';
   const fontSize = data.fontSize || 13;
   const fontFamily = data.fontFamily || 'Inter';
+  const fontWeight = data.fontBold ? 'bold' : (data.fontWeight || '500');
+  const fontStyle = data.fontItalic ? 'italic' : 'normal';
+  const borderWidth = data.borderWidth || 2;
   const rotation = data.rotation || 0;
+  const opacity = data.opacity !== undefined ? data.opacity : 1;
+  const glowEffect = data.glowEffect || false;
+
+  const glowStyle = glowEffect ? { filter: `drop-shadow(0 0 8px ${borderColor})` } : {};
 
   return (
     <>
@@ -36,7 +44,7 @@ export default function DatabaseNode({ id, data, selected }) {
       <div
         className={`fc-node fc-node-database ${selected ? 'selected' : ''}`}
         onDoubleClick={handleDoubleClick}
-        style={{ width: '100%', height: '100%', transform: `rotate(${rotation}deg)` }}
+        style={{ width: '100%', height: '100%', transform: `rotate(${rotation}deg)`, opacity, ...glowStyle }}
       >
         <svg viewBox="0 0 120 100" preserveAspectRatio="none" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}>
         {/* Cylinder body */}
@@ -44,14 +52,14 @@ export default function DatabaseNode({ id, data, selected }) {
           d={`M2,20 L2,78 C2,92 118,92 118,78 L118,20`}
           fill={bgColor}
           stroke={borderColor}
-          strokeWidth="2"
+          strokeWidth={borderWidth}
         />
         {/* Top ellipse */}
         <ellipse
           cx="60" cy="20" rx="58" ry="16"
           fill={bgColor}
           stroke={borderColor}
-          strokeWidth="2"
+          strokeWidth={borderWidth}
         />
       </svg>
       {editing ? (
@@ -62,10 +70,10 @@ export default function DatabaseNode({ id, data, selected }) {
           onChange={(e) => setLabel(e.target.value)}
           onBlur={commitEdit}
           onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); commitEdit(); } }}
-          style={{ fontSize: `${fontSize}px`, fontFamily, padding: '30px 12px 8px 12px' }}
+          style={{ fontSize: `${fontSize}px`, fontFamily, padding: '30px 12px 8px 12px', color: fontColor, fontWeight, fontStyle }}
         />
       ) : (
-        <div className="fc-node-label" style={{ fontSize: `${fontSize}px`, fontFamily, paddingTop: '28px' }}>
+        <div className="fc-node-label" style={{ fontSize: `${fontSize}px`, fontFamily, paddingTop: '28px', color: fontColor, fontWeight, fontStyle }}>
           {label}
         </div>
       )}

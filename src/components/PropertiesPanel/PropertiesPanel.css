@@ -219,3 +219,81 @@
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }
 }
+
+/* ── Toggle Switch ── */
+.toggle-label {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+  user-select: none;
+}
+.toggle-switch {
+  width: 40px;
+  height: 22px;
+  background: var(--color-bg-elevated);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-full);
+  position: relative;
+  cursor: pointer;
+  transition: background var(--transition-fast), border-color var(--transition-fast);
+  flex-shrink: 0;
+}
+.toggle-switch.active {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+}
+.toggle-knob {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: white;
+  transition: transform var(--transition-fast);
+  box-shadow: 0 1px 3px rgba(0,0,0,0.3);
+}
+.toggle-switch.active .toggle-knob {
+  transform: translateX(18px);
+}
+
+/* ── Font Style Buttons (Bold / Italic) ── */
+.font-style-row {
+  display: flex;
+  gap: var(--space-2);
+}
+.font-style-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 32px;
+  font-family: var(--font-family);
+  font-size: var(--font-size-sm);
+  color: var(--color-text-secondary);
+  background: var(--color-bg-tertiary);
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+.font-style-btn:hover {
+  background: var(--color-bg-elevated);
+  border-color: var(--color-border-hover);
+  color: var(--color-text-primary);
+}
+.font-style-btn.active {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: white;
+}
+
+/* ── Opacity value label ── */
+.opacity-value {
+  font-size: var(--font-size-xs);
+  color: var(--color-text-muted);
+  width: 36px;
+  text-align: right;
+  flex-shrink: 0;
+}

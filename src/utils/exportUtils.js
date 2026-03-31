@@ -10,8 +10,38 @@ import {
 import PptxGenJS from 'pptxgenjs';
 
 /**
+ * Collect all <marker> elements from the live SVG defs and inline them
+ * into every SVG inside the cloned node so html-to-image can render them.
+ */
+function inlineMarkers(clonedEl) {
+  // Grab all marker definitions from the live document
+  const liveMarkers = Array.from(
+    document.querySelectorAll('defs marker')
+  );
+  if (!liveMarkers.length) return;
+
+  // For each SVG in the clone, add a <defs> block with ALL markers
+  const svgs = clonedEl.querySelectorAll('svg');
+  svgs.forEach((svg) => {
+    let defs = svg.querySelector('defs');
+    if (!defs) {
+      defs = document.createElementNS('http://www.w3.org/2000/svg', 'defs');
+      svg.insertBefore(defs, svg.firstChild);
+    }
+    liveMarkers.forEach((marker) => {
+      const clone = marker.cloneNode(true);
+      defs.appendChild(clone);
+    });
+  });
+
+  // Fix marker-end / marker-start references that use url(#id)
+  // No changes needed — IDs are already inlined above.
+}
+
+/**
  * Get the ReactFlow viewport element and capture it as a PNG data URL.
  * Uses the entire .react-flow container and filters out overlays.
+ * Inlines SVG markers so arrowheads appear in the exported image.
  */
 async function captureCanvas() {
   const wrapper = document.querySelector('.react-flow');
@@ -32,6 +62,31 @@ async function captureCanvas() {
       if (node.classList.contains('react-flow__attribution')) return false;
       if (node.classList.contains('react-flow__panel')) return false;
       return true;
+    },
+    // Before the clone is rasterised, inline all SVG marker defs
+    // so the arrowheads are embedded and visible.
+    onclone: (_doc, clonedEl) => {
+      inlineMarkers(clonedEl);
+
+      // Additionally, inline computed styles for edge paths so
+      // stroke colour / width is preserved.
+      const edgePaths = clonedEl.querySelectorAll('.react-flow__edge-path');
+      edgePaths.forEach((path) => {
+        const live = document.querySelector(
+          `.react-flow__edge-path[d="${path.getAttribute('d')}"]`
+        );
+        if (live) {
+          const cs = window.getComputedStyle(live);
+          path.style.stroke = cs.stroke || '#94a3b8';
+          path.style.strokeWidth = cs.strokeWidth || '2px';
+        } else {
+          // Fallback: use a visible colour
+          if (!path.style.stroke || path.style.stroke === '') {
+            path.style.stroke = '#94a3b8';
+            path.style.strokeWidth = '2px';
+          }
+        }
+      });
     },
   });
   return dataUrl;

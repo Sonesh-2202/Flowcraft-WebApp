@@ -26,9 +26,17 @@ export default function CloudNode({ id, data, selected }) {
 
   const bgColor = data.bgColor || '#1e3a5f';
   const borderColor = data.borderColor || '#06b6d4';
+  const fontColor = data.fontColor || '#ffffff';
   const fontSize = data.fontSize || 13;
   const fontFamily = data.fontFamily || 'Inter';
+  const fontWeight = data.fontBold ? 'bold' : (data.fontWeight || '500');
+  const fontStyle = data.fontItalic ? 'italic' : 'normal';
+  const borderWidth = data.borderWidth || 2;
   const rotation = data.rotation || 0;
+  const opacity = data.opacity !== undefined ? data.opacity : 1;
+  const glowEffect = data.glowEffect || false;
+
+  const glowStyle = glowEffect ? { filter: `drop-shadow(0 0 8px ${borderColor})` } : {};
 
   return (
     <>
@@ -36,14 +44,14 @@ export default function CloudNode({ id, data, selected }) {
       <div
         className={`fc-node fc-node-cloud ${selected ? 'selected' : ''}`}
         onDoubleClick={handleDoubleClick}
-        style={{ width: '100%', height: '100%', transform: `rotate(${rotation}deg)` }}
+        style={{ width: '100%', height: '100%', transform: `rotate(${rotation}deg)`, opacity, ...glowStyle }}
       >
         <svg viewBox="0 0 160 100" preserveAspectRatio="none" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}>
         <path
           d="M32,80 C10,80 2,65 10,52 C4,40 14,26 30,28 C34,14 52,8 68,16 C78,6 100,6 112,18 C130,12 152,22 148,42 C158,48 158,68 144,76 C148,86 132,90 120,84 C110,92 90,92 80,84 C66,92 44,90 32,80 Z"
           fill={bgColor}
           stroke={borderColor}
-          strokeWidth="2"
+          strokeWidth={borderWidth}
         />
       </svg>
       {editing ? (
@@ -54,10 +62,10 @@ export default function CloudNode({ id, data, selected }) {
           onChange={(e) => setLabel(e.target.value)}
           onBlur={commitEdit}
           onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); commitEdit(); } }}
-          style={{ fontSize: `${fontSize}px`, fontFamily, padding: '20px 24px' }}
+          style={{ fontSize: `${fontSize}px`, fontFamily, padding: '20px 24px', color: fontColor, fontWeight, fontStyle }}
         />
       ) : (
-        <div className="fc-node-label" style={{ fontSize: `${fontSize}px`, fontFamily }}>
+        <div className="fc-node-label" style={{ fontSize: `${fontSize}px`, fontFamily, color: fontColor, fontWeight, fontStyle }}>
           {label}
         </div>
       )}

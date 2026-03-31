@@ -13,7 +13,7 @@ const FONT_FAMILIES = [
   'Trebuchet MS',
 ];
 
-const FONT_SIZES = [10, 11, 12, 13, 14, 16, 18, 20, 24];
+const FONT_SIZES = [10, 11, 12, 13, 14, 16, 18, 20, 24, 28, 32];
 
 const EDGE_TYPES = [
   { id: 'default', label: 'Bezier' },
@@ -21,6 +21,14 @@ const EDGE_TYPES = [
   { id: 'step', label: 'Step' },
   { id: 'smoothstep', label: 'Smooth Step' },
 ];
+
+const ARROW_STYLES = [
+  { id: 'closed', label: 'Filled Arrow' },
+  { id: 'open', label: 'Open Arrow' },
+  { id: 'none', label: 'No Arrow' },
+];
+
+const STROKE_WIDTHS = [1, 1.5, 2, 2.5, 3, 4, 5];
 
 export default function PropertiesPanel({ activeEdgeType }) {
   const { nodes, edges, selectedNodeId, selectedEdgeId } = useFlowState();
@@ -99,6 +107,10 @@ export default function PropertiesPanel({ activeEdgeType }) {
 
   /* ── Edge selected ── */
   if (selectedEdge) {
+    const edgeColor = selectedEdge.style?.stroke || '#94a3b8';
+    const edgeStrokeWidth = selectedEdge.style?.strokeWidth || 2;
+    const edgeLabel = selectedEdge.label || '';
+
     return (
       <aside className="properties-panel" id="properties-panel">
         <div className="properties-header">
@@ -108,6 +120,8 @@ export default function PropertiesPanel({ activeEdgeType }) {
           </svg>
           Edge Properties
         </div>
+
+        {/* Edge Style */}
         <div className="prop-group">
           <div className="prop-group-title">Style</div>
           <div className="prop-row">
@@ -135,6 +149,82 @@ export default function PropertiesPanel({ activeEdgeType }) {
             </label>
           </div>
         </div>
+
+        {/* Edge Color & Stroke */}
+        <div className="prop-group">
+          <div className="prop-group-title">Appearance</div>
+          <div className="prop-row">
+            <span className="prop-label">Edge Color</span>
+            <div className="color-picker-row">
+              <div
+                className="color-picker-swatch"
+                style={{ background: edgeColor }}
+              >
+                <input
+                  type="color"
+                  value={edgeColor.startsWith('#') ? edgeColor : '#94a3b8'}
+                  onChange={(e) => {
+                    const c = e.target.value;
+                    updateEdge({
+                      style: { ...selectedEdge.style, stroke: c, strokeWidth: edgeStrokeWidth },
+                      markerEnd: { ...(selectedEdge.markerEnd || {}), color: c },
+                    });
+                  }}
+                  id="prop-edge-color"
+                />
+              </div>
+              <input
+                className="input-field"
+                type="text"
+                value={edgeColor}
+                onChange={(e) => {
+                  const c = e.target.value;
+                  updateEdge({
+                    style: { ...selectedEdge.style, stroke: c, strokeWidth: edgeStrokeWidth },
+                    markerEnd: { ...(selectedEdge.markerEnd || {}), color: c },
+                  });
+                }}
+                style={{ flex: 1 }}
+              />
+            </div>
+          </div>
+          <div className="prop-row">
+            <label className="prop-label" htmlFor="prop-edge-stroke-width">Stroke Width</label>
+            <select
+              id="prop-edge-stroke-width"
+              className="select-field"
+              value={edgeStrokeWidth}
+              onChange={(e) =>
+                updateEdge({
+                  style: { ...selectedEdge.style, stroke: edgeColor, strokeWidth: Number(e.target.value) },
+                  markerEnd: { ...(selectedEdge.markerEnd || {}), color: edgeColor },
+                })
+              }
+            >
+              {STROKE_WIDTHS.map((w) => (
+                <option key={w} value={w}>{w}px</option>
+              ))}
+            </select>
+          </div>
+        </div>
+
+        {/* Edge Label */}
+        <div className="prop-group">
+          <div className="prop-group-title">Label</div>
+          <div className="prop-row">
+            <label className="prop-label" htmlFor="prop-edge-label">Label Text</label>
+            <input
+              id="prop-edge-label"
+              className="input-field"
+              type="text"
+              value={edgeLabel}
+              placeholder="Edge label..."
+              onChange={(e) => updateEdge({ label: e.target.value })}
+            />
+          </div>
+        </div>
+
+        {/* Edge Info */}
         <div className="prop-group">
           <div className="prop-group-title">Info</div>
           <div className="prop-row">
@@ -144,6 +234,7 @@ export default function PropertiesPanel({ activeEdgeType }) {
             </span>
           </div>
         </div>
+
         <div className="prop-group">
           <button className="prop-delete-btn" onClick={deleteSelected} id="btn-delete-edge">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -160,6 +251,7 @@ export default function PropertiesPanel({ activeEdgeType }) {
   /* ── Node selected ── */
   const nodeData = selectedNode.data || {};
   const rotation = nodeData.rotation || 0;
+  const opacity = nodeData.opacity !== undefined ? nodeData.opacity : 1;
 
   return (
     <aside className="properties-panel" id="properties-panel">
@@ -235,6 +327,54 @@ export default function PropertiesPanel({ activeEdgeType }) {
             />
           </div>
         </div>
+        <div className="prop-row">
+          <label className="prop-label" htmlFor="prop-border-width">Border Width</label>
+          <select
+            id="prop-border-width"
+            className="select-field"
+            value={nodeData.borderWidth || 2}
+            onChange={(e) => updateNodeData('borderWidth', Number(e.target.value))}
+          >
+            {STROKE_WIDTHS.map((w) => (
+              <option key={w} value={w}>{w}px</option>
+            ))}
+          </select>
+        </div>
+      </div>
+
+      {/* Effects */}
+      <div className="prop-group">
+        <div className="prop-group-title">Effects</div>
+        <div className="prop-row">
+          <label className="prop-label" htmlFor="prop-opacity">
+            Opacity: {Math.round(opacity * 100)}%
+          </label>
+          <div className="rotation-control">
+            <input
+              id="prop-opacity"
+              type="range"
+              min="0.1"
+              max="1"
+              step="0.05"
+              value={opacity}
+              onChange={(e) => updateNodeData('opacity', Number(e.target.value))}
+              className="rotation-slider"
+            />
+            <span className="opacity-value">{Math.round(opacity * 100)}%</span>
+          </div>
+        </div>
+        <div className="prop-row">
+          <label className="prop-label toggle-label">
+            <span>Glow Effect</span>
+            <div
+              className={`toggle-switch ${nodeData.glowEffect ? 'active' : ''}`}
+              onClick={() => updateNodeData('glowEffect', !nodeData.glowEffect)}
+              id="prop-glow-effect"
+            >
+              <div className="toggle-knob" />
+            </div>
+          </label>
+        </div>
       </div>
 
       {/* Rotation */}
@@ -283,6 +423,29 @@ export default function PropertiesPanel({ activeEdgeType }) {
       <div className="prop-group">
         <div className="prop-group-title">Typography</div>
         <div className="prop-row">
+          <span className="prop-label">Font Color</span>
+          <div className="color-picker-row">
+            <div
+              className="color-picker-swatch"
+              style={{ background: nodeData.fontColor || '#ffffff' }}
+            >
+              <input
+                type="color"
+                value={nodeData.fontColor || '#ffffff'}
+                onChange={(e) => updateNodeData('fontColor', e.target.value)}
+                id="prop-font-color"
+              />
+            </div>
+            <input
+              className="input-field"
+              type="text"
+              value={nodeData.fontColor || '#ffffff'}
+              onChange={(e) => updateNodeData('fontColor', e.target.value)}
+              style={{ flex: 1 }}
+            />
+          </div>
+        </div>
+        <div className="prop-row">
           <label className="prop-label" htmlFor="prop-font-family">Font Family</label>
           <select
             id="prop-font-family"
@@ -307,6 +470,27 @@ export default function PropertiesPanel({ activeEdgeType }) {
               <option key={s} value={s}>{s}px</option>
             ))}
           </select>
+        </div>
+        <div className="prop-row">
+          <span className="prop-label">Style</span>
+          <div className="font-style-row">
+            <button
+              className={`font-style-btn ${nodeData.fontBold ? 'active' : ''}`}
+              onClick={() => updateNodeData('fontBold', !nodeData.fontBold)}
+              id="prop-font-bold"
+              title="Bold"
+            >
+              <strong>B</strong>
+            </button>
+            <button
+              className={`font-style-btn ${nodeData.fontItalic ? 'active' : ''}`}
+              onClick={() => updateNodeData('fontItalic', !nodeData.fontItalic)}
+              id="prop-font-italic"
+              title="Italic"
+            >
+              <em>I</em>
+            </button>
+          </div>
         </div>
       </div>
 

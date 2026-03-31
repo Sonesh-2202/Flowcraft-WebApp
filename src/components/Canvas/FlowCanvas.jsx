@@ -47,10 +47,17 @@ export default function FlowCanvas({ activeEdgeType, recordSnapshot }) {
   /* ── Connecting edges ── */
   const onConnect = useCallback(
     (params) => {
+      const strokeColor = '#94a3b8';
       const newEdge = {
         ...params,
         type: activeEdgeType,
-        markerEnd: { type: MarkerType.ArrowClosed, width: 16, height: 16 },
+        markerEnd: {
+          type: MarkerType.ArrowClosed,
+          width: 18,
+          height: 18,
+          color: strokeColor,
+        },
+        style: { stroke: strokeColor, strokeWidth: 2 },
         animated: false,
       };
       const updated = addEdge(newEdge, edges);
@@ -192,7 +199,13 @@ export default function FlowCanvas({ activeEdgeType, recordSnapshot }) {
         deleteKeyCode={null}
         defaultEdgeOptions={{
           type: activeEdgeType,
-          markerEnd: { type: MarkerType.ArrowClosed, width: 16, height: 16 },
+          markerEnd: {
+            type: MarkerType.ArrowClosed,
+            width: 18,
+            height: 18,
+            color: '#94a3b8',
+          },
+          style: { stroke: '#94a3b8', strokeWidth: 2 },
         }}
         proOptions={{ hideAttribution: true }}
       >

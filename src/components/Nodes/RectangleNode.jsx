@@ -26,9 +26,17 @@ export default function RectangleNode({ id, data, selected }) {
 
   const bgColor = data.bgColor || '#1e3a5f';
   const borderColor = data.borderColor || '#3b82f6';
+  const fontColor = data.fontColor || '#ffffff';
   const fontSize = data.fontSize || 13;
   const fontFamily = data.fontFamily || 'Inter';
+  const fontWeight = data.fontBold ? 'bold' : (data.fontWeight || '500');
+  const fontStyle = data.fontItalic ? 'italic' : 'normal';
+  const borderWidth = data.borderWidth || 2;
   const rotation = data.rotation || 0;
+  const opacity = data.opacity !== undefined ? data.opacity : 1;
+  const glowEffect = data.glowEffect || false;
+
+  const glowStyle = glowEffect ? { filter: `drop-shadow(0 0 8px ${borderColor})` } : {};
 
   return (
     <>
@@ -36,14 +44,14 @@ export default function RectangleNode({ id, data, selected }) {
       <div
         className={`fc-node fc-node-rectangle ${selected ? 'selected' : ''}`}
         onDoubleClick={handleDoubleClick}
-        style={{ width: '100%', height: '100%', transform: `rotate(${rotation}deg)` }}
+        style={{ width: '100%', height: '100%', transform: `rotate(${rotation}deg)`, opacity, ...glowStyle }}
       >
         <svg viewBox="0 0 160 60" preserveAspectRatio="none" style={{ position: 'absolute', inset: 0, width: '100%', height: '100%' }}>
         <rect
           x="1" y="1" width="158" height="58" rx="8"
           fill={bgColor}
           stroke={borderColor}
-          strokeWidth="2"
+          strokeWidth={borderWidth}
         />
       </svg>
       {editing ? (
@@ -54,10 +62,10 @@ export default function RectangleNode({ id, data, selected }) {
           onChange={(e) => setLabel(e.target.value)}
           onBlur={commitEdit}
           onKeyDown={(e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); commitEdit(); } }}
-          style={{ fontSize: `${fontSize}px`, fontFamily }}
+          style={{ fontSize: `${fontSize}px`, fontFamily, color: fontColor, fontWeight, fontStyle }}
         />
       ) : (
-        <div className="fc-node-label" style={{ fontSize: `${fontSize}px`, fontFamily }}>
+        <div className="fc-node-label" style={{ fontSize: `${fontSize}px`, fontFamily, color: fontColor, fontWeight, fontStyle }}>
           {label}
         </div>
       )}

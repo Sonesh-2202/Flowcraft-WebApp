@@ -43,12 +43,15 @@
 }
 
 /* Edge marker (arrowhead) */
-.react-flow__arrowhead polyline {
-  stroke: var(--color-text-muted);
-  fill: var(--color-text-muted);
+.react-flow__arrowhead polyline,
+.react-flow__arrowhead path {
+  stroke: inherit;
+  fill: inherit;
 }
 .react-flow__edge.selected .react-flow__arrowhead polyline,
-.react-flow__edge:hover .react-flow__arrowhead polyline {
+.react-flow__edge.selected .react-flow__arrowhead path,
+.react-flow__edge:hover .react-flow__arrowhead polyline,
+.react-flow__edge:hover .react-flow__arrowhead path {
   stroke: var(--color-accent);
   fill: var(--color-accent);
 }
