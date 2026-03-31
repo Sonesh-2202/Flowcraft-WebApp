@@ -7,10 +7,10 @@
 **A dynamic, web-based flowchart and diagram builder application.**
 
 <p align="center">
-  <img src="https://img.shields.io/badge/React-19-blue.svg?style=for-the-badge&logo=react&logoColor=white" alt="React 19" />
-  <img src="https://img.shields.io/badge/Vite-Lightning%20Fast-646CFF.svg?style=for-the-badge&logo=vite&logoColor=white" alt="Vite" />
-  <img src="https://img.shields.io/badge/React_Flow-Engine-FF0072.svg?style=for-the-badge&logo=react&logoColor=white" alt="React Flow" />
-  <img src="https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge" alt="License" />
+  <a href="https://react.dev/" target="_blank"><img src="https://img.shields.io/badge/React-19-blue.svg?style=for-the-badge&logo=react&logoColor=white" alt="React 19" /></a>
+  <a href="https://vitejs.dev/" target="_blank"><img src="https://img.shields.io/badge/Vite-Lightning%20Fast-646CFF.svg?style=for-the-badge&logo=vite&logoColor=white" alt="Vite" /></a>
+  <a href="https://reactflow.dev/" target="_blank"><img src="https://img.shields.io/badge/React_Flow-Engine-FF0072.svg?style=for-the-badge&logo=react&logoColor=white" alt="React Flow" /></a>
+  <a href="https://opensource.org/licenses/MIT" target="_blank"><img src="https://img.shields.io/badge/License-MIT-green.svg?style=for-the-badge" alt="License" /></a>
 </p>
 
 *FlowCraft allows users to drag & drop nodes, naturally scale them using boundary resizers, customize their visual properties, connect them, and export diagrams seamlessly into various formats including Images, PowerPoint, and Word documents.*
