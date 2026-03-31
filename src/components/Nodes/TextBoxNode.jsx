@@ -43,7 +43,7 @@ export default function TextBoxNode({ id, data, selected }) {
 
   return (
     <>
-      <NodeResizer isVisible={selected} minWidth={80} minHeight={36} />
+      <NodeResizer isVisible={selected} minWidth={40} minHeight={24} />
       <div
         className={`fc-node fc-node-text-box ${selected ? 'selected' : ''}`}
         onDoubleClick={handleDoubleClick}
